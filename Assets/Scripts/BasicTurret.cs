@@ -16,10 +16,12 @@ public class BasicTurret : MonoBehaviour
     public Transform partToRotate;
     public GameObject bulletPrefab;
     public Transform firePoint;
+    private Animator turretAnimator;
 
 
     private void Start()
     {
+        turretAnimator = GetComponent<Animator>();
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
     public void UpdateTarget()
@@ -65,10 +67,11 @@ public class BasicTurret : MonoBehaviour
     }
     public void Shoot()
     {
+        turretAnimator.SetTrigger("Shooting");
         GameObject bulletGO = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Bullet bullet = bulletGO.GetComponent<Bullet>();
 
-        if(bullet != null)
+        if (bullet != null)
         {
             bullet.Seek(target);
         }
